@@ -1,4 +1,4 @@
-﻿var prodApp = angular.module("prodApp");
+﻿var prodApp = angular.module("prodApp", []);
 
 prodApp.controller("productController", ['$scope', '$http', function ($scope, $http) {
 
@@ -32,7 +32,6 @@ prodApp.controller("productController", ['$scope', '$http', function ($scope, $h
             })
             .then(function (response) {
                 $scope.products = response.data;
-                console.log("products:" + response.data);
             });
     };
     $scope.getStatistic = function () {
