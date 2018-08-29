@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html ng-app="prodApp">
+<head>
+    <meta charset="utf-8" />
+    <title>Тестовый сервис</title>
+    <link href="Content/bootstrap.css" rel="stylesheet">
+    <link href="Content/site.css" rel="stylesheet">
+</head>
+<body>
+    <div ng-controller="productController" ng-init="init()" class="container">
+        <h3>Сведения о товарах</h3>
+        <div class="row">
+            <div class="col-4"><p>Всего товаров: <b>{{statistic.Count}}</b></p></div>
+            <div class="col-4"><p>Минимальная цена: <b>{{statistic.MinPrice | number:2}}</b></p></div>
+            <div class="col-4"><p>Максимальная цена: <b>{{statistic.MaxPrice | number:2}}</b></p></div>
+        </div>
+        <div class="row justify-content-md-end">
+            <div class="col-3"><p>Страница: <b>{{currentPage}}</b> из <b>{{totalPages}}</b></p></div>
+            <div class="col-1">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <button class="page-link" ng-disabled="currentPage <= 1" ng-click="getPrevPage()" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </button>
+                        </li>
+                        <li class="page-item">
+                            <button class="page-link" ng-disabled="currentPage >= totalPages" ng-click="getNextPage()" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th>Номер</th>
+                        <th>Наименование</th>
+                        <th>Описание</th>
+                        <th>Поставщик</th>
+                        <th>Продавец</th>
+                        <th>№ продавца</th>
+                        <th>О продавце</th>
+                        <th>Цена</th>
+                        <th>Изображение</th>
+                    </tr>
+                    <tr ng-repeat="prod in products">
+                        <td>{{prod.part_number}}</td>
+                        <td>{{prod.name | limitTo:40 }} {{prod.name.length < 40 ? '' : '...'}}</td>
+                        <td>{{prod.description | limitTo: 40 }} {{prod.description.length < 40 ? '' : '...'}}</td>
+                        <td>{{prod.supplier | limitTo: 40 }} {{prod.supplier.length < 40 ? '' : '...'}}</td>
+                        <td>{{prod.vendor | limitTo: 40 }} {{prod.vendor.length < 40 ? '' : '...'}}</td>
+                        <td>{{prod.vendor_part_number}}</td>
+                        <td>{{prod.vendor_description | limitTo: 40 }} {{prod.vendor_description.length < 40 ? '' : '...'}}</td>
+                        <td>
+                            <span ng-show="prod.price > statistic.HighAveragePrice" style="color: red">{{prod.price | number : 2}}</span>
+                            <span ng-show="prod.price < statistic.LowAveragePrice" style="color: blue">{{prod.price | number : 2}}</span>
+                            <span ng-show="prod.price >= statistic.LowAveragePrice && prod.price < statistic.HighAveragePrice">
+                                {{prod.price | number : 2}}
+                            </span>
+                        </td>
+                        <td><img src="{{prod.image}}" width="150"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+		
+<script src="Scripts/jquery-3.0.0.js" ></script>
+<script src="Scripts/bootstrap.js"></script>
+<script src="Scripts/angular.min.js"></script>
+<script src="Scripts/angular-route.min.js"></script>
+<script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+<script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+<script src="Scripts/controllers/productController.js"></script>
+</body>
+</html>
