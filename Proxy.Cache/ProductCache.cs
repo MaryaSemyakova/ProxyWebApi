@@ -5,37 +5,16 @@ using Proxy.BL;
 
 namespace Proxy.Cache
 {
-    public class ProductCache
+    public class ProductCache : IProductCache
     {
-        private MemoryCache _memoryCache;
-        private CacheBL _cacheBL;
-
-        #region singleton
-
-        private static ProductCache _instance;
-        private static object _lock = new object();
-
-        public static ProductCache Instance
-        {
-            get
-            {
-                if (null == _instance)
-                {
-                    lock (_lock)
-                    {
-                        _instance = new ProductCache();
-                    }
-                }
-
-                return _instance;
-            }
-        }
-        #endregion
-
-        public ProductCache()
+        private readonly MemoryCache _memoryCache;
+        private readonly ICacheBL _cacheBL;
+        
+        public ProductCache(ICacheBL cacheBL)
         {
             _memoryCache = MemoryCache.Default;
-            _cacheBL = new CacheBL();
+            _cacheBL = cacheBL;
+            LoadCache();
         }
 
         public void LoadCache()
@@ -49,7 +28,6 @@ namespace Proxy.Cache
             {
                 _memoryCache["statistic"] = _cacheBL.GetStatistic(GetProducts());
             }
-            
         }
 
         public List<Product> GetProducts()

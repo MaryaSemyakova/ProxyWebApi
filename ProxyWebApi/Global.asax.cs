@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using Proxy.Cache;
 
 namespace ProxyWebApi
 {
@@ -8,7 +7,6 @@ namespace ProxyWebApi
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            ProductCache.Instance.LoadCache();
         }
     }
 }

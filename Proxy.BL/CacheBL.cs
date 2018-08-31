@@ -7,27 +7,30 @@ using Proxy.BE;
 
 namespace Proxy.BL
 {
-    public class CacheBL
+    public class CacheBL : ICacheBL
     {
+        private readonly HttpClient _client;
+
+        public CacheBL(HttpClient client)
+        {
+            _client = client;
+        }
+
         public IEnumerable<Product> GetProducts()
         {
             var products = new List<Product>();
 
-            using (var client = new HttpClient())
+            var url = ConfigurationManager.AppSettings["serviceUrl"];
+
+            while (null != url)
             {
-                var url = ConfigurationManager.AppSettings["serviceUrl"];
+                var response = _client.GetAsync(url).Result;
+                response.EnsureSuccessStatusCode();
 
-                while (null != url)
-                {
-                    var response = client.GetAsync(url).Result;
+                var productResult = JsonConvert.DeserializeObject<ProductResponce>(response.Content.ReadAsStringAsync().Result);
+                products.AddRange(productResult.Products);
 
-                    response.EnsureSuccessStatusCode();
-                    var productResult = JsonConvert.DeserializeObject<ProductResponce>(response.Content.ReadAsStringAsync().Result);
-
-                    products.AddRange(productResult.Products);
-
-                    url = productResult.NextUrl;
-                }
+                url = productResult.NextUrl;
             }
 
             return products;
@@ -41,6 +44,7 @@ namespace Proxy.BL
             }
 
             var averagePrice = products.Average(x => x.Price);
+
             return new Statistic
             {
                 Count = products.Count,
