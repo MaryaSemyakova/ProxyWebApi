@@ -4,6 +4,9 @@ using Unity.WebApi;
 using Proxy.BL;
 using Proxy.Cache;
 using Unity.Lifetime;
+using System.Net.Http;
+using System.Configuration;
+using Unity.Injection;
 
 namespace ProxyWebApi
 {
@@ -12,7 +15,8 @@ namespace ProxyWebApi
         public static void RegisterComponents()
         {
 			var container = new UnityContainer();
-            container.RegisterType<ICacheBL, CacheBL>(new ContainerControlledLifetimeManager());
+            container.RegisterType<HttpClient>( new InjectionFactory(x => new HttpClient()));
+            container.RegisterType<IProductBL, ProductBL>(new ContainerControlledLifetimeManager());
             container.RegisterType<IProductCache, ProductCache>(new ContainerControlledLifetimeManager()); 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

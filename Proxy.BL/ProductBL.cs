@@ -7,18 +7,18 @@ using Proxy.BE;
 
 namespace Proxy.BL
 {
-    public class CacheBL : ICacheBL
+    public class ProductBL : IProductBL
     {
         private readonly HttpClient _client;
 
-        public CacheBL()
+        public ProductBL(HttpClient client)
         {
-            _client = new HttpClient();
+            _client = client;
         }
 
         public IEnumerable<Product> GetProducts()
         {
-            var products = new List<Product>();
+             var products = new List<Product>();
 
             var url = ConfigurationManager.AppSettings["serviceUrl"];
 

@@ -41,8 +41,6 @@ prodApp.controller("productController", ['$scope', '$http', function ($scope, $h
             .then(function (response) {
                 $scope.statistic = response.data;
                 $scope.totalPages = Math.round($scope.statistic.Count / $scope.pageCount);
-
-                console.log("products:" + response.data);
             });
     };
 

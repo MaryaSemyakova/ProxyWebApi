@@ -8,9 +8,9 @@ namespace Proxy.Cache
     public class ProductCache : IProductCache
     {
         private readonly MemoryCache _memoryCache;
-        private readonly ICacheBL _cacheBL;
+        private readonly IProductBL _cacheBL;
         
-        public ProductCache(ICacheBL cacheBL)
+        public ProductCache(IProductBL cacheBL)
         {
             _memoryCache = MemoryCache.Default;
             _cacheBL = cacheBL;

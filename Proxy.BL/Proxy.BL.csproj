@@ -45,8 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CacheBL.cs" />
-    <Compile Include="ICacheBL.cs" />
+    <Compile Include="ProductBL.cs" />
+    <Compile Include="IProductBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
