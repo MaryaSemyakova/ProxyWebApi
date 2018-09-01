@@ -11,9 +11,9 @@ namespace Proxy.BL
     {
         private readonly HttpClient _client;
 
-        public CacheBL(HttpClient client)
+        public CacheBL()
         {
-            _client = client;
+            _client = new HttpClient();
         }
 
         public IEnumerable<Product> GetProducts()
