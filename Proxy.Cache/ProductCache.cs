@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Runtime.Caching;
 using Proxy.BE;
 using Proxy.BL;
@@ -21,7 +22,7 @@ namespace Proxy.Cache
         {
             if (null == _memoryCache["products"])
             {
-                _memoryCache["products"] = _cacheBL.GetProducts();
+                _memoryCache["products"] = _cacheBL.GetProducts(ConfigurationManager.AppSettings["serviceUrl"]);
             }
 
             if (null == _memoryCache["statistic"])

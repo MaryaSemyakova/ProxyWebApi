@@ -16,11 +16,10 @@ namespace Proxy.BL
             _client = client;
         }
 
-        public IEnumerable<Product> GetProducts()
+        public List<Product> GetProducts(string url)
         {
              var products = new List<Product>();
-
-            var url = ConfigurationManager.AppSettings["serviceUrl"];
+            
 
             while (null != url)
             {

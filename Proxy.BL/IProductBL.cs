@@ -5,7 +5,7 @@ namespace Proxy.BL
 {
     public interface IProductBL
     {
-        IEnumerable<Product> GetProducts();
+        List<Product> GetProducts(string url);
         Statistic GetStatistic(List<Product> products);
     }
 }
